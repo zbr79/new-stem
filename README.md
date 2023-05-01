@@ -2,8 +2,8 @@
 
 ## Group Members
 Kirsten Ochoa ochoakirsten@csu.fullerton.edu  
-Vinh Le vinh.le@csu.fullerton.edu 
-Jonathan Ong jgrady15@csu.fullerton.edu 
+Vinh Le vinh.le@csu.fullerton.edu  
+Jonathan Ong jgrady15@csu.fullerton.edu   
 Zhibin Ren zhibinren79@gmail.com  
 
 
