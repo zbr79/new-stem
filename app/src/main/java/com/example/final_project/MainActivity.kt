@@ -1,6 +1,7 @@
 package com.example.final_project
 
 import android.animation.ArgbEvaluator
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.example.final_project.models.MemoryCard
 import com.example.final_project.models.MemoryGame
 import com.example.final_project.utils.DEFAULT_ICONS
 import com.example.final_project.utils.EXTRA_BOARD_SIZE
+import com.example.final_project.utils.EXTRA_GAME_NAME
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.google.android.material.snackbar.Snackbar
 
@@ -90,6 +92,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CREATE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val customGameName = data?.getStringExtra(EXTRA_GAME_NAME)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
     private fun showCreationDialog(){
         val boardSizeView = LayoutInflater.from(this).inflate(R.layout.dialog_board_size,null)
