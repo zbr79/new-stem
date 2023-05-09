@@ -2,6 +2,7 @@ package com.example.final_project
 
 import android.animation.ArgbEvaluator
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,19 +13,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.models.BoardSize
-import com.example.final_project.models.MemoryCard
 import com.example.final_project.models.MemoryGame
-import com.example.final_project.utils.DEFAULT_ICONS
 import com.example.final_project.utils.EXTRA_BOARD_SIZE
 import com.example.final_project.utils.EXTRA_GAME_NAME
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -59,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         StartActivity(intent)
 
          */
-
         setupBoard()
     }
+
 
 
 
@@ -75,7 +72,8 @@ class MainActivity : AppCompatActivity() {
             R.id.mi_refresh ->{
                 //Creating warning to player they will lose progress
                 if(memoryGame.getNumMoves() > 0 && !memoryGame.haveWonGame()){
-                    showAlertDialog("Quit your current game?", null, View.OnClickListener {
+
+                    showAlertDialog(getString(R.string.quitCurrentGame), null, View.OnClickListener {
                         setupBoard()
                     })
                 }else {
@@ -93,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CREATE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -152,16 +151,16 @@ class MainActivity : AppCompatActivity() {
     {
         when(boardSize){
             BoardSize.EASY ->{
-                tvNumMoves.text = "Easy: 4 x 2"
-                tvNumPairs.text = "Pairs: 0 / 4"
+                tvNumMoves.text = getString(R.string.easy)
+                tvNumPairs.text = getString(R.string.easyPairsFound)
             }
             BoardSize.MEDIUM -> {
-                tvNumMoves.text = "Easy: 6 x 3"
-                tvNumPairs.text = "Pairs: 0 / 9"
+                tvNumMoves.text = getString(R.string.medium)
+                tvNumPairs.text = getString(R.string.mediumPairsFound)
             }
             BoardSize.HARD -> {
-                tvNumMoves.text = "Easy: 6 x 4"
-                tvNumPairs.text = "Pairs: 0 / 12"
+                tvNumMoves.text = getString(R.string.hard)
+                tvNumPairs.text = getString(R.string.hardPairsFound)
             }
         }
         // Set initial color of num pairs text view to red
@@ -192,12 +191,12 @@ class MainActivity : AppCompatActivity() {
         //error handling
         if (memoryGame.haveWonGame()){
             //alert user of invalid move
-            Snackbar.make(clRoot, "You already won!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(clRoot, getString(R.string.alreadyWon), Snackbar.LENGTH_LONG).show()
             return
         }
         if (memoryGame.isCardFaceUp(position)){
             //alert user of invalid move
-            Snackbar.make(clRoot, "Invalid move", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(clRoot, getString(R.string.invalidMove), Snackbar.LENGTH_SHORT).show()
             return
         }
 
@@ -214,12 +213,13 @@ class MainActivity : AppCompatActivity() {
             ) as Int
             tvNumPairs.setTextColor(color)
 
-            tvNumPairs.text = "Pairs: ${memoryGame.numPairsFound} / ${boardSize.getNumPairs()}"
+            tvNumPairs.text = getString(R.string.numPairs,memoryGame.numPairsFound, boardSize.getNumPairs())
+//            tvNumPairs.text = "Pairs: ${memoryGame.numPairsFound} / ${boardSize.getNumPairs()}"
             if(memoryGame.haveWonGame()){
-                Snackbar.make(clRoot, "You won! Congratulation", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(clRoot, getString(R.string.winGame), Snackbar.LENGTH_LONG).show()
             }
         }
-        tvNumMoves.text = "Moves: ${memoryGame.getNumMoves()}"
+        tvNumMoves.text = getString(R.string.numMoves, memoryGame.getNumMoves())
         adapter.notifyDataSetChanged()
 
 

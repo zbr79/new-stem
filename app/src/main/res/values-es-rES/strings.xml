@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Juego de memoria</string>
+    <string name="numMoves">La jugada: %1$d</string>
+    <string name="numPairs">Pares: %1$d/%2$d</string>
+    <string name="easy">Fácil(4 x 2)</string>
+    <string name="easyPairsFound">Pares: 0/4</string>
+    <string name="mediumPairsFound">Pares: 0/9</string>
+    <string name="hardPairsFound">Pares: 0/12</string>
+    <string name="medium">Medio (6 x 3)</string>
+    <string name="hard">Difícil (6 x 4)</string>
+    <string name="quitCurrentGame">¿Salir de tu juego actual?</string>
+    <string name="choose_new_size">Elige un nuevo tamaño</string>
+    <string name="create_custom_game">Crear juego personalizado</string>
+    <string name="alreadyWon">ya ganaste!!!</string>
+    <string name="invalidMove">Movimiento inválido</string>
+    <string name="winGame">¡Ganaste! Felicitaciones</string>
+</resources>

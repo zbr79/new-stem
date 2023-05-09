@@ -135,15 +135,15 @@ class CreateActivity : AppCompatActivity() {
     }
 
     private fun saveDataToFirebase() {
-        Log.i(TAG, "Save Data to Firebase")
-        for ((index, photoUri) in chosenImageUris.withIndex()) {
-            val imageByteArray = getImageByteArray(photoUri)
-        }
+//        Log.i(TAG, "Save Data to Firebase")
+//        for ((index, photoUri) in chosenImageUris.withIndex()) {
+////            val imageByteArray = getImageByteArray(photoUri)
+//        }
     }
 
-    private fun getImageByteArray(photoUri: Uri): ByteArray {
-        val originalBitmap = if
-    }
+//    private fun getImageByteArray(photoUri: Uri): ByteArray {
+//        val originalBitmap = if
+//    }
 
     private fun shouldEnableSaveButton(): Boolean {
         if (chosenImageUris.size != numImagesRequired) {
