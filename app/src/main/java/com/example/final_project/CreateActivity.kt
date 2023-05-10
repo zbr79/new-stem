@@ -60,7 +60,8 @@ class CreateActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         boardSize = intent.getSerializableExtra(EXTRA_BOARD_SIZE) as BoardSize
         numImagesRequired = boardSize.getNumPairs()
-        supportActionBar?.title = "Choose pics (0 / $numImagesRequired)"
+        supportActionBar?.title = getString(R.string.choose_pics_default, numImagesRequired)
+//        supportActionBar?.title = "Choose pics (0 / $numImagesRequired)"
 
         btnSave.setOnClickListener {
             saveDataToFirebase()
@@ -105,7 +106,7 @@ class CreateActivity : AppCompatActivity() {
                 launchIntentForPhotos()
             }
             else {
-                Toast.makeText(this, "In order to create a custom game, you need to provide access to photos", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.access_to_photos), Toast.LENGTH_LONG).show()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -141,7 +142,8 @@ class CreateActivity : AppCompatActivity() {
             chosenImageUris.add(selectedUri)
         }
         adapter.notifyDataSetChanged()
-        supportActionBar?.title = "Choose pics(${chosenImageUris.size} / $numImagesRequired)"
+        supportActionBar?.title = getString(R.string.choose_pic, chosenImageUris.size, numImagesRequired)
+//        supportActionBar?.title = "Choose pics(${chosenImageUris.size} / $numImagesRequired)"
         btnSave.isEnabled = shouldEnableSaveButton()
     }
 

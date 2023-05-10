@@ -15,4 +15,13 @@
     <string name="alreadyWon">ya ganaste!!!</string>
     <string name="invalidMove">Movimiento inválido</string>
     <string name="winGame">¡Ganaste! Felicitaciones</string>
+
+    <string name="save">Guardar</string>
+    <string name="game_name_example_panda_fun">Nombre del juego (ejemplo:panda_fun)</string>
+    <string name="create_your_own_memory_board">Crea tu propia tarjeta de memoria</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">DE ACUERDO</string>
+    <string name="choose_pics_default">Elegir la foto (0 / %1$d)</string>
+    <string name="access_to_photos">Para crear un juego personalizado, debe proporcionar acceso a las fotos.</string>
+    <string name="choose_pic">elegir la foto (%1$d / %2$d)</string>
 </resources>

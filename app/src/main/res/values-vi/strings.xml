@@ -15,4 +15,13 @@
     <string name="alreadyWon">Bạn đã thắng!!!</string>
     <string name="invalidMove">Nước đi không hợp lệ</string>
     <string name="winGame">Chúc mừng!!! Bạn đã chiến thắng</string>
+
+    <string name="save">Lưu lại</string>
+    <string name="game_name_example_panda_fun">Tên trò chơi (ví dụ:panda_fun)</string>
+    <string name="create_your_own_memory_board">Tạo cho trơi trí nhớ cho bạn</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="ok">Chấp nhận</string>
+    <string name="choose_pics_default">Chọn ảnh (0 / %1$d)</string>
+    <string name="access_to_photos">Để tạo game tự chọn, bạn cần cho phép cập nhật vô hình ảnh</string>
+    <string name="choose_pic">Chọn ảnh (%1$d / %2$d)</string>
 </resources>
