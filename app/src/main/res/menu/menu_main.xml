@@ -9,10 +9,10 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/mi_new_size"
-        android:title="@string/choose_new_size"
+        android:title="Choose new size"
         app:showAsAction="never" />
     <item
         android:id="@+id/mi_custom"
-        android:title="@string/create_custom_game"
+        android:title="Create Custom Game"
         app:showAsAction="never" />
 </menu>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "150894405870",
+    "project_id": "stem-squad-ea0ed",
+    "storage_bucket": "stem-squad-ea0ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150894405870:android:8387414171f5d9dd522bff",
+        "android_client_info": {
+          "package_name": "com.example.final_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150894405870-a7ijvksrkohsg9e6triu7iln02rtvk1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjVbo5oEIcsGYOYNKssYQRLZ6YlQBnQZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150894405870-a7ijvksrkohsg9e6triu7iln02rtvk1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
