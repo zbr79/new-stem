@@ -3,8 +3,9 @@ package com.example.final_project
 import android.animation.ArgbEvaluator
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -12,8 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,11 +22,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.models.BoardSize
 import com.example.final_project.models.MemoryCard
 import com.example.final_project.models.MemoryGame
-import com.example.final_project.utils.DEFAULT_ICONS
 import com.example.final_project.utils.EXTRA_BOARD_SIZE
 import com.example.final_project.utils.EXTRA_GAME_NAME
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +42,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
 
+    //Save instance state recycler view NOT WORKING
+
+    private var savedRecyclerLayoutState: Parcelable? = null
+    private val BUNDLE_RECYCLER_LAYOUT = "recycler_layout"
+
+    //
+
+
     private lateinit var memoryGame: MemoryGame
     private lateinit var adapter : MemoryBoardAdapter
 
@@ -50,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         clRoot = findViewById(R.id.clRoot)
         rvBoard = findViewById(R.id.rvBoard)
-        tvNumMoves = findViewById(R.id  .tvNumMoves)
+        tvNumMoves = findViewById(R.id.tvNumMoves)
         tvNumPairs = findViewById(R.id.tvNumPairs)
 
         /*
@@ -59,8 +70,8 @@ class MainActivity : AppCompatActivity() {
         StartActivity(intent)
 
          */
-
         setupBoard()
+
     }
 
 
@@ -221,7 +232,79 @@ class MainActivity : AppCompatActivity() {
         }
         tvNumMoves.text = getString(R.string.numMoves, memoryGame.getNumMoves())
         adapter.notifyDataSetChanged()
-
-
     }
+
+    //App persistence after rotation
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        tvNumMoves = findViewById(R.id.tvNumMoves)
+        tvNumPairs = findViewById(R.id.tvNumPairs)
+
+        // save recycler view not working
+//        val listState: Parcelable? = rvBoard.layoutManager?.onSaveInstanceState()
+//        outState.putParcelable("recyclerState", listState)
+//        savedRecyclerLayoutState = rvBoard.getLayoutManager()?.onSaveInstanceState()
+1
+
+        val numMoves: CharSequence? = tvNumMoves.text
+        val numPairs: CharSequence? = tvNumPairs.text
+        val savedMemoryGame : MemoryGame = memoryGame
+        val savedCards = savedMemoryGame.cards
+
+        val sharedPreferences: SharedPreferences = getSharedPreferences("shared preference", MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+        val gson : Gson = Gson()
+        val json : String = gson.toJson(savedCards)
+        editor.putString("SavedCards",json)
+        editor.apply()
+
+        outState.putCharSequence("SaveNumMoves", numMoves)
+        outState.putCharSequence("SaveNumPairs", numPairs)
+
+//        Log.d("LOG_TAG_ACTIVITY", "cards in save${savedCards}")
+        Log.d("LOG_TAG_ACTIVITY", "Activity has been saved")
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        tvNumMoves = findViewById(R.id.tvNumMoves)
+        tvNumPairs = findViewById(R.id.tvNumPairs)
+
+
+        val savedMemoryGame : MemoryGame = memoryGame
+        val savedRvBoard : RecyclerView
+        var savedCards = savedMemoryGame.cards
+
+        val sharedPreferences: SharedPreferences = getSharedPreferences("shared preference", MODE_PRIVATE)
+        val gson : Gson = Gson()
+        val json : String? = sharedPreferences.getString("SavedCards", null)
+        val type : Type = object : TypeToken<List<MemoryCard>>() {}.type
+        savedCards = gson.fromJson(json, type)
+
+        if (savedCards == null){
+            savedCards = savedMemoryGame.cards
+        }
+        //recycler view not working
+//        val listState = savedInstanceState.getParcelable("recyclerState", null)
+//        rvBoard.getLayoutManager()?.onRestoreInstanceState(savedRecyclerLayoutState)
+
+        val numMoves: CharSequence? = savedInstanceState.getCharSequence("SaveNumMoves","0")
+        val numPairs: CharSequence? = savedInstanceState.getCharSequence("SaveNumPairs","0")
+        tvNumMoves.text = numMoves
+        tvNumPairs.text = numPairs
+
+        Log.d("LOG_TAG_ACTIVITY", "Cards in retrieve: $savedCards")
+        Log.d("LOG_TAG_ACTIVITY", "Activity has been restored")
+    }
+//    override fun onPause() {
+//        super.onPause()
+//        savedRecyclerLayoutState = rvBoard.getLayoutManager()?.onSaveInstanceState()
+//    }
+
+//    override fun onResume() {
+//        super.onResume()
+//        rvBoard.getLayoutManager()?.onRestoreInstanceState(savedRecyclerLayoutState)
+//    }
 }
