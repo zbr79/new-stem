@@ -47,6 +47,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
 
     //On saved instance
     implementation 'com.google.code.gson:gson:2.8.2'

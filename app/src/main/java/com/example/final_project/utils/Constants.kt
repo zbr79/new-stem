@@ -19,3 +19,5 @@ val DEFAULT_ICONS = listOf(
     R.drawable.ic_school
 )
 
+
+

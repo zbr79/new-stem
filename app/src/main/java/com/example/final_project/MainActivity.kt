@@ -1,5 +1,6 @@
 package com.example.final_project
 
+
 import android.animation.ArgbEvaluator
 import android.app.Activity
 import android.content.Intent
@@ -11,12 +12,14 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.final_project.models.BoardSize
@@ -29,7 +32,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-
+const val LOG_TAG = "MainActivity"
+const val COUNTER_KEY = "counter"
 class MainActivity : AppCompatActivity() {
 
     companion object{
@@ -42,7 +46,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvNumMoves: TextView
     private lateinit var tvNumPairs: TextView
 
-    //Save instance state recycler view NOT WORKING
+    private lateinit var increaseButton: Button
+    private lateinit var decreaseButton: Button
+    private var saveButton: Button? = null
+    private var loadButton: Button? = null
+    private lateinit var counterText: TextView
 
     private var savedRecyclerLayoutState: Parcelable? = null
     private val BUNDLE_RECYCLER_LAYOUT = "recycler_layout"
@@ -58,6 +66,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        counterText = findViewById(R.id.counter_text)
+        counterText.text = viewModel.getCount().toString()
+
+        increaseButton = findViewById(R.id.incresaseButton)
+        increaseButton.setOnClickListener {
+            viewModel.increaseCount()
+            counterText.text = viewModel.getCount().toString()
+        }
+
+        decreaseButton = findViewById(R.id.decresaseButton)
+        decreaseButton.setOnClickListener {
+            viewModel.decreaseCount()
+            counterText.text = viewModel.getCount().toString()
+        }
+
+        viewModel.loadCounter()
+        Log.d(LOG_TAG, "setting counter after loading it from DataStore to ${viewModel.getCount()}")
+        counterText.text = viewModel.getCount().toString()
+
+
+
+
+
+
+
+
+
+
+
+
 
         clRoot = findViewById(R.id.clRoot)
         rvBoard = findViewById(R.id.rvBoard)
@@ -307,4 +347,9 @@ class MainActivity : AppCompatActivity() {
 //        super.onResume()
 //        rvBoard.getLayoutManager()?.onRestoreInstanceState(savedRecyclerLayoutState)
 //    }
+
+    private val viewModel: ViewModel by lazy {
+        PreferencesRepository.initialize(this)
+        ViewModelProvider(this)[ViewModel::class.java]
+    }
 }
