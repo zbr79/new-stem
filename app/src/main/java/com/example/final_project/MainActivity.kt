@@ -31,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
+import android.media.MediaPlayer
 
 const val LOG_TAG = "MainActivity"
 const val COUNTER_KEY = "counter"
@@ -48,12 +49,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var increaseButton: Button
     private lateinit var decreaseButton: Button
-    private var saveButton: Button? = null
-    private var loadButton: Button? = null
+    private lateinit var likeButton: Button
+
     private lateinit var counterText: TextView
 
-    private var savedRecyclerLayoutState: Parcelable? = null
-    private val BUNDLE_RECYCLER_LAYOUT = "recycler_layout"
+
+    private lateinit var mediaPlayer: MediaPlayer
 
     //
 
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound)
 
         counterText = findViewById(R.id.counter_text)
         counterText.text = viewModel.getCount().toString()
@@ -80,12 +82,26 @@ class MainActivity : AppCompatActivity() {
         decreaseButton = findViewById(R.id.decresaseButton)
         decreaseButton.setOnClickListener {
             viewModel.decreaseCount()
+            Log.d(LOG_TAG, "Debug log message")
+            mediaPlayer.start()
             counterText.text = viewModel.getCount().toString()
         }
 
         viewModel.loadCounter()
-        Log.d(LOG_TAG, "setting counter after loading it from DataStore to ${viewModel.getCount()}")
         counterText.text = viewModel.getCount().toString()
+
+
+
+        likeButton = findViewById(R.id.button_like)
+        likeButton.setOnClickListener {
+
+            try {
+                mediaPlayer.start()
+                Log.e(LOG_TAG, "NO Error playing music:")
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "Error playing music: ${e.message}")
+            }
+        }
 
 
 
